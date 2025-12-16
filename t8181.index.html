@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🚕 Такси 8181 | Быстро • Надёжно • Дешево</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root {
+    --primary: #FFD600;
+    --secondary: #25D366;
+    --dark: #1a1a1a;
+    --light: #ffffff;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #f5f5f5 0%, #e8f4f8 100%);
+    color: #333;
+    overflow-x: hidden;
+}
+
+header {
+    background: linear-gradient(135deg, var(--primary) 0%, #ffea00 100%);
+    padding: 25px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(255, 214, 0, 0.3);
+}
+
+.header-content {
+    position: relative;
+    z-index: 2;
+}
+
+@keyframes taxiDrive {
+    0% {
+        transform: translateX(-100px) rotate(0deg);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes taxiFloat {
+    0%, 100% {
+        transform: translateY(0) rotate(-5deg);
+    }
+    50% {
+        transform: translateY(-10px) rotate(5deg);
+    }
+}
+
+.taxi-icon {
+    font-size: 50px;
+    animation: taxiDrive 1.2s ease-out forwards, taxiFloat 3s ease-in-out infinite 1.2s;
+    display: inline-block;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5rem;
+    color: var(--dark);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+    animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+header p {
+    margin: 10px 0 0;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #444;
+    animation: fadeInUp 0.8s ease-out 0.5s both;
+}
+
+.header-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.1;
+}
+
+.road-line {
+    position: absolute;
+    bottom: 30%;
+    width: 100%;
+    height: 4px;
+    background: repeating-linear-gradient(
+        to right,
+        transparent,
+        transparent 20px,
+        var(--dark) 20px,
+        var(--dark) 40px
+    );
+    animation: roadMove 20s linear infinite;
+}
+
+@keyframes roadMove {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-40px); }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 15px rgba(37, 211, 102, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+    }
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@keyframes counterIncrement {
+    from {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    to {
+        transform: scale(1);
+    }
+}
+
+.container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.card {
+    background: var(--light);
+    padding: 25px;
+    margin-bottom: 25px;
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    opacity: 0;
+    transform: translateY(20px);
+    animation: cardAppear 0.6s ease-out forwards;
+    border-left: 5px solid var(--primary);
+    position: relative;
+    overflow: hidden;
+}
+
+.card:nth-child(1) { animation-delay: 0.2s; }
+.card:nth-child(2) { animation-delay: 0.4s; }
+.card:nth-child(3) { animation-delay: 0.6s; }
+.card:nth-child(4) { animation-delay: 0.8s; }
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 214, 0, 0.1), transparent);
+    transition: left 0.7s;
+}
+
+.card:hover::before {
+    left: 100%;
+}
+
+.card h2 {
+    margin-top: 0;
+    color: var(--dark);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+}
+
+.card h2 i {
+    color: var(--primary);
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px dashed #eee;
+    transition: var(--transition);
+}
+
+.price-item:hover {
+    background: rgba(255, 214, 0, 0.05);
+    padding-left: 10px;
+    border-radius: 5px;
+}
+
+.price-item:last-child {
+    border-bottom: none;
+}
+
+.price {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #2e7d32;
+    background: rgba(46, 125, 50, 0.1);
+    padding: 5px 12px;
+    border-radius: 20px;
+    transition: var(--transition);
+}
+
+.price-item:hover .price {
+    background: rgba(46, 125, 50, 0.2);
+    transform: scale(1.05);
+}
+
+.button {
+    display: block;
+    text-align: center;
+    background: linear-gradient(135deg, var(--secondary) 0%, #1da851 100%);
+    color: white;
+    padding: 18px;
+    text-decoration: none;
+    border-radius: 12px;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-top: 15px;
+    transition: var(--transition);
+    animation: pulse 2s infinite;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(37, 211, 102, 0.4);
+    animation: none;
+}
+
+.button:active {
+    transform: translateY(1px);
+}
+
+.button i {
+    margin-right: 10px;
+    font-size: 1.4rem;
+}
+
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.7);
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+.stats-card {
+    display: flex;
+    justify-content: space-around;
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
+    color: white;
+    border-radius: 15px;
+    margin-bottom: 25px;
+    box-shadow: var(--shadow);
+    animation: cardAppear 0.6s ease-out 1s both;
+}
+
+.stat-item {
+    padding: 10px;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: var(--primary);
+    display: block;
+    transition: var(--transition);
+}
+
+.stat-label {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+footer {
+    text-align: center;
+    padding: 25px 15px;
+    background: var(--dark);
+    color: white;
+    margin-top: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+footer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary), var(--primary));
+    animation: gradientMove 3s linear infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.contact-info {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.contact-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+    padding: 8px 15px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.contact-item:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-3px);
+}
+
+.contact-item i {
+    color: var(--primary);
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .taxi-icon {
+        font-size: 40px;
+    }
+    
+    .card {
+        padding: 20px;
+    }
+    
+    .price-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+    
+    .price {
+        align-self: flex-end;
+    }
+    
+    .stats-card {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .contact-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+}
+
+.scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 0%;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+    z-index: 1000;
+    transition: width 0.1s;
+}
+</style>
+</head>
+
+<body>
+<div class="scroll-progress"></div>
+
+<header>
+    <div class="header-bg">
+        <div class="road-line"></div>
+    </div>
+    <div class="header-content">
+        <div class="taxi-icon">🚕</div>
+        <h1>Такси 8181</h1>
+        <p>Быстро • Надёжно • Дешево</p>
+    </div>
+</header>
+
+<div class="container">
+    <div class="stats-card">
+        <div class="stat-item">
+            <span class="stat-number" id="onlineTaxis">0</span>
+            <span class="stat-label">Машин онлайн</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number" id="completedOrders">0</span>
+            <span class="stat-label">Поездок сегодня</span>
+        </div>
+        <div class="stat-item">
+            <span class="stat-number">4.9</span>
+            <span class="stat-label">Рейтинг службы</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2><i class="fas fa-city"></i> Тарифы по городу</h2>
+        <div class="price-item">
+            <span>Эконом</span>
+            <span class="price">4 сомони</span>
+        </div>
+        <div class="price-item">
+            <span>Стандарт</span>
+            <span class="price">5 сомони</span>
+        </div>
+        <div class="price-item">
+            <span>Комфорт</span>
+            <span class="price">10 сомони</span>
+        </div>
+        <div class="price-item">
+            <span>За 1 км (дополнительно)</span>
+            <span class="price">3 сомони</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2><i class="fas fa-route"></i> Междугородние поездки</h2>
+        <div class="price-item">
+            <span>Канибадам → Худжанд (из дома)</span>
+            <span class="price">40 сомони</span>
+        </div>
+        <div class="price-item">
+            <span>Канибадам → Исфара (из дома)</span>
+            <span class="price">25 сомони</span>
+        </div>
+        <div class="price-item">
+            <span>Офис → Худжанд</span>
+            <span class="price">30 сомони</span>
+        </div>
+        <div class="price-item">
+            <span>Офис → Исфара</span>
+            <span class="price">20 сомони</span>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2><i class="fas fa-phone-alt"></i> Заказать такси</h2>
+        <p>Нажмите кнопку ниже для быстрого заказа</p>
+        
+        <button class="button" id="orderButton">
+            <i class="fas fa-phone"></i> Позвонить для заказа
+        </button>
+        
+        <p style="margin-top: 15px; text-align: center; opacity: 0.8; font-size: 0.9rem;">
+            <i class="fas fa-clock"></i> Круглосуточно • <i class="fas fa-car"></i> 5-10 мин
+        </p>
+    </div>
+    
+    <div class="card">
+        <h2><i class="fas fa-star"></i> Наши преимущества</h2>
+        <div class="price-item">
+            <span><i class="fas fa-bolt" style="color: #FFD600;"></i> Приедем за 5-10 минут</span>
+        </div>
+        <div class="price-item">
+            <span><i class="fas fa-shield-alt" style="color: #25D366;"></i> Безопасные поездки</span>
+        </div>
+        <div class="price-item">
+            <span><i class="fas fa-wallet" style="color: #2196F3;"></i> Фиксированные цены</span>
+        </div>
+        <div class="price-item">
+            <span><i class="fas fa-smile" style="color: #9C27B0;"></i> Вежливые водители</span>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="contact-info">
+        <div class="contact-item">
+            <i class="fas fa-phone"></i>
+            <span>+992 (XX) XXX-XX-XX</span>
+        </div>
+        <div class="contact-item">
+            <i class="fas fa-clock"></i>
+            <span>Работаем 24/7</span>
+        </div>
+        <div class="contact-item">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>Канибадам, Таджикистан</span>
+        </div>
+    </div>
+    <p>©️ 2025 Такси 8181 | Все права защищены</p>
+    <p style="opacity: 0.7; font-size: 0.9rem; margin-top: 10px;">
+        <i class="fas fa-car"></i> Служба заказа такси №1 в регионе
+    </p>
+</footer>
+
+<script>
+function animateCounter(elementId, targetNumber, duration = 2000) {
+    const element = document.getElementById(elementId);
+    let current = 0;
+    const increment = targetNumber / (duration / 16);
+    
+    const updateCounter = () => {
+        current += increment;
+        if (current < targetNumber) {
+            element.textContent = Math.floor(current);
+            requestAnimationFrame(updateCounter);
+        } else {
+            element.textContent = targetNumber;
+            element.style.animation = 'counterIncrement 0.5s ease';
+            setTimeout(() => {
+                element.style.animation = '';
+            }, 500);
+        }
+    };
+    
+    updateCounter();
+}
+
+function createRipple(event) {
+    const button = event.currentTarget;
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
+    
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${event.clientX - button.getBoundingClientRect().left - radius}px`;
+    circle.style.top = `${event.clientY - button.getBoundingClientRect().top - radius}px`;
+    circle.classList.add("ripple");
+    
+    const ripple = button.getElementsByClassName("ripple")[0];
+    if (ripple) ripple.remove();
+    
+    button.appendChild(circle);
+}
+
+function updateScrollProgress() {
+    const scrollProgress = document.querySelector('.scroll-progress');
+    const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    const scrolled = (window.scrollY / windowHeight) * 100;
+    scrollProgress.style.width = scrolled + '%';
+}
+
+function initScrollAnimations() {
+    const cards = document.querySelectorAll('.card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
+    
+    cards.forEach(card => observer.observe(card));
+}
+
+function handleOrderClick() {
+    createRipple(event);
+    
+    const button = document.getElementById('orderButton');
+    button.innerHTML = '<i class="fas fa-phone"></i> Звонок...';
+    button.style.background = 'linear-gradient(135deg, #1da851 0%, #25D366 100%)';
+    
+    setTimeout(() => {
+        button.innerHTML = '<i class="fas fa-phone"></i> Позвонить для заказа';
+        button.style.background = 'linear-gradient(135deg, var(--secondary) 0%, #1da851 100%)';
+        alert('В реальном сайте здесь будет автоматический звонок на номер такси!');
+    }, 2000);
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    animateCounter('onlineTaxis', 24);
+    animateCounter('completedOrders', 156);
+    
+    initScrollAnimations();
+    
+    const orderButton = document.getElementById('orderButton');
+    orderButton.addEventListener('click', handleOrderClick);
+    
+    window.addEventListener('scroll', updateScrollProgress);
+    
+    setInterval(() => {
+        const currentTaxis = parseInt(document.getElementById('onlineTaxis').textContent);
+        const randomChange = Math.floor(Math.random() * 5) - 2;
+        const newValue = Math.max(15, Math.min(35, currentTaxis + randomChange));
+        
+        if (newValue !== currentTaxis) {
+            document.getElementById('onlineTaxis').textContent = newValue;
+            document.getElementById('onlineTaxis').style.animation = 'counterIncrement 0.5s ease';
+            setTimeout(() => {
+                document.getElementById('onlineTaxis').style.animation = '';
+            }, 500);
+        }
+    }, 30000);
+    
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            const priceItems = this.querySelectorAll('.price');
+            priceItems.forEach(item => {
+                if (Math.random() > 0.7) {
+                    item.style.transform = 'scale(1.1)';
+                    setTimeout(() => {
+                        item.style.transform = 'scale(1)';
+                    }, 300);
+                }
+            });
+        });
+    });
+});
+
+window.addEventListener('beforeunload', function() {
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.3s';
+});
+</script>
+</body>
+</html>
